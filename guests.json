@@ -1,0 +1,60 @@
+{
+  "guests": [
+    {
+      "token": "a1b2c3d4",
+      "names": ["Carlos García", "María López"],
+      "displayName": "Carlos y María",
+      "lang": "es",
+      "plusOne": false
+    },
+    {
+      "token": "e5f6a7b8",
+      "names": ["John Smith"],
+      "displayName": "John",
+      "lang": "en",
+      "plusOne": true
+    },
+    {
+      "token": "c9d0e1f2",
+      "names": ["Ana Martínez", "Pedro Ramírez"],
+      "displayName": "Ana y Pedro",
+      "lang": "es",
+      "plusOne": false
+    },
+    {
+      "token": "f3a4b5c6",
+      "names": ["Emily Johnson", "Michael Johnson"],
+      "displayName": "Emily & Michael",
+      "lang": "en",
+      "plusOne": false
+    },
+    {
+      "token": "d7e8f9a0",
+      "names": ["Lucía Hernández"],
+      "displayName": "Lucía",
+      "lang": "es",
+      "plusOne": true
+    },
+    {
+      "token": "b1c2d3e4",
+      "names": ["Sarah Williams"],
+      "displayName": "Sarah",
+      "lang": "en",
+      "plusOne": false
+    },
+    {
+      "token": "f5a6b7c8",
+      "names": ["Roberto Díaz", "Carmen Díaz"],
+      "displayName": "Roberto y Carmen",
+      "lang": "es",
+      "plusOne": false
+    },
+    {
+      "token": "d9e0f1a2",
+      "names": ["James Brown", "Lisa Brown"],
+      "displayName": "James & Lisa",
+      "lang": "en",
+      "plusOne": false
+    }
+  ]
+}

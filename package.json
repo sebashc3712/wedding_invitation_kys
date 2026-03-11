@@ -1,0 +1,12 @@
+{
+  "name": "invitacion-boda-katia-sebastian",
+  "version": "1.0.0",
+  "description": "Wedding invitation website for Katia & Sebastián",
+  "private": true,
+  "scripts": {
+    "build": "node build.js",
+    "clean": "rm -rf dist",
+    "serve": "npx serve dist",
+    "deploy": "npx gh-pages -d dist"
+  }
+}
