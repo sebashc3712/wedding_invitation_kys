@@ -248,7 +248,7 @@ h3 {
   margin-top: 2rem;
 }
 
-/* --- Card wrapper (bow + border + content) --- */
+/* --- Card wrapper (frame image + content) --- */
 .detail-card {
   position: relative;
   display: flex;
@@ -256,57 +256,71 @@ h3 {
   align-items: center;
 }
 
-/* Decorative bow at top */
-.detail-card__bow {
-  width: 60px;
-  height: 24px;
-  position: relative;
-  z-index: 2;
-  margin-bottom: -6px;
-}
-
-/* Wavy hand-drawn border */
-.detail-card__border {
+/* Frame wrapper — positions the frame image behind the content */
+.detail-card__frame {
   position: relative;
   width: 100%;
-  padding: 3px;
-  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.detail-card__border::before {
-  content: '';
+/* Frame image — stretched to fill content box exactly */
+.detail-card__frame-img {
   position: absolute;
   inset: 0;
-  border: 2.5px solid var(--olive-green);
-  border-radius: 8px 8px 20px 20px;
-  /* Wavy/scalloped effect using SVG filter or border-image */
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect x='4' y='4' width='192' height='272' rx='12' fill='none' stroke='black' stroke-width='8' stroke-dasharray='0' /%3E%3C/svg%3E");
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect x='4' y='4' width='192' height='272' rx='12' fill='none' stroke='black' stroke-width='8' /%3E%3C/svg%3E");
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+  filter: sepia(0.3) saturate(0.6) hue-rotate(-10deg);
 }
+
+/*
+ * Padding logic: the frame's decorative lines sit ~12-18% inward from the
+ * image edges, so content padding must exceed that to stay inside.
+ *
+ * Arch (date):   arch cap ≈ top 18%, bottom ellipse ≈ bottom 20%, sides ≈ 10%
+ * Oval (venue):  oval curves ≈ sides 18%, top/bottom 12%
+ * Wavy (dresscode): scallop peaks ≈ sides 15%, top/bottom 10%
+ */
 
 .detail-card__content {
-  background: var(--peach-cream);
-  border: 2px solid var(--olive-green);
-  border-radius: 8px 8px 20px 20px;
-  padding: 2.5rem 1.5rem 2rem;
-  text-align: center;
   position: relative;
-  /* Wavy border simulation with box-shadow */
-  box-shadow:
-    inset 0 0 0 4px var(--peach-cream),
-    inset 0 0 0 6px var(--olive-green);
-  border-style: solid;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Arch frame (default): clear arch top + bottom ornament */
+  padding: 4.5rem 2rem 4rem;
 }
 
-/* Hand-drawn icon area */
+/* Oval frame (venue) */
+.detail-card__frame--oval .detail-card__content {
+  padding: 2.5rem 3rem 2.5rem;
+}
+
+/* Wavy frame (dress code) */
+.detail-card__frame--wavy .detail-card__content {
+  padding: 2.5rem 3rem 2.5rem;
+}
+
+/* Icon area — PNG icons, tinted to match olive-green / terracotta palette */
 .detail-card__icon {
   margin-bottom: 1rem;
 }
 
-.detail-card__icon svg {
-  width: 72px;
-  height: 72px;
+.detail-card__icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
   display: inline-block;
+  /* Tint black/red icons to olive-green tone */
+  filter: sepia(1) saturate(0.4) hue-rotate(20deg) brightness(0.65);
 }
 
 /* Label — bold uppercase like the template */
@@ -322,26 +336,26 @@ h3 {
 
 /* Value text */
 .detail-card__value {
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
   color: var(--olive-green);
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .detail-card__sub {
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   color: var(--sage-fern);
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
   font-style: italic;
 }
 
 .detail-card__link {
   display: inline-block;
-  margin-top: 1rem;
-  padding: 0.5rem 1.5rem;
+  margin-top: 0.75rem;
+  padding: 0.4rem 1.2rem;
   background: var(--coral);
   color: #fff;
   border-radius: 25px;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
@@ -706,6 +720,79 @@ h3 {
 /* On wider screens, scale up and adjust opacity */
 @media (min-width: 768px) {
   .doodle { opacity: 0.45; }
+}
+
+/* --- Mobile: prevent doodle overlap & horizontal scroll --- */
+@media (max-width: 480px) {
+  .doodle {
+    opacity: 0.35;
+  }
+
+  /* Scale down the largest doodles (>60px) in every section */
+  /* HERO */
+  .d1  { width: 55px; left: 2%; }
+  .d3  { width: 40px; }
+  .d5  { width: 45px; }
+  .d6  { width: 35px; }
+  .d7  { width: 32px; }
+  .d8  { width: 40px; }
+  .d13 { width: 35px; }
+  .d14 { width: 32px; }
+  .d16 { width: 38px; }
+
+  /* INVITATION */
+  .d21 { width: 48px; }
+  .d22 { width: 40px; }
+  .d27 { width: 38px; }
+  .d29 { width: 35px; }
+  .d30 { width: 42px; right: 2%; }
+
+  /* EVENT DETAILS */
+  .d41 { width: 45px; }
+  .d42 { width: 42px; }
+  .d43 { width: 38px; }
+  .d48 { width: 40px; right: 2%; }
+  .d49 { width: 35px; }
+  .d50 { width: 32px; }
+
+  /* COUNTDOWN */
+  .d61 { width: 45px; }
+  .d62 { width: 32px; }
+  .d65 { width: 35px; }
+  .d67 { width: 38px; }
+  .d72 { width: 35px; }
+
+  /* RSVP */
+  .d81 { width: 40px; }
+  .d82 { width: 35px; }
+  .d83 { width: 42px; }
+  .d86 { width: 32px; }
+  .d89 { width: 32px; }
+  .d90 { width: 35px; }
+  .d91 { width: 35px; }
+  .d92 { width: 32px; }
+  .d97 { width: 35px; }
+
+  /* FOOTER */
+  .d101 { width: 42px; }
+  .d102 { width: 35px; }
+  .d107 { width: 30px; }
+  .d110 { width: 35px; right: 2%; }
+  .d112 { width: 32px; }
+
+  /* Stagger overlapping vertical pairs — push one down */
+  .d2  { top: 10%; }   /* was 6%, too close to d1 */
+  .d4  { top: 14%; }   /* was 10%, too close to d3 */
+  .d23 { top: 12%; }   /* was 8%, too close to d21 */
+  .d24 { top: 14%; }   /* was 10%, too close to d22 */
+  .d43 { top: 12%; }   /* was 8%, too close to d41 */
+  .d44 { top: 14%; }   /* was 10%, too close to d42 */
+  .d63 { top: 12%; }   /* was 8%, too close to d61 */
+  .d64 { top: 10%; }   /* was 6%, too close to d62 */
+  .d83 { top: 10%; }   /* was 6%, too close to d81 */
+  .d84 { top: 9%; }    /* was 5%, too close to d82 */
+  .d103 { top: 8%; }   /* was 2%, too close to d101 */
+  .d104 { top: 12%; }  /* was 8%, too close to d102 */
 }
 
 /* ============================================
