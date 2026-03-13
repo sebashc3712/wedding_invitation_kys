@@ -1,12 +1,4 @@
-**Task 1 – Icon replacement + framing:**
-- Replace the current date icon, costume/wardrobe icon, and location icon 
-  with icons in @graphic_elements from the project folder.
-- After swapping the icons, wrap each individual piece of information 
-  (date, costume, location) inside its own container/frame element.
-
-**Task 2 – Decorative frame borders from folder assets:**
-- Use the frame/border assets available inside the @graphic_elements folder to 
-  decorate the frames and page borders.
-- Ensure zero element overlap in phone view — maintain proper z-index layering and 
-  spacing so that decorative frames do not collide with content elements 
-  or degrade the visual aesthetic.
+1. Add a button to add the date of the wedding in the calendar of the guest 
+2. Optimize the icons and buttons to be perfect in mobile. We need to focus more on mobile because people will be openning more the website in their cellphone. We saw a lot of icons overlapping in the final section.
+3. Delete the section of the ilutration of the invitation. We want to have the inivtation in the first section next to the name of the guest. That means that the itlustration will be next to the first part of the current website. Like having vertical divs.
+4. Change the frames of event details for more sober ones and standard. We tried many times with these different ones but is not helping

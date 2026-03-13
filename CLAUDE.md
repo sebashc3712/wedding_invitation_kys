@@ -28,15 +28,18 @@ After ANY change to template, CSS, JS, or guests.json, you must run `npm run bui
 4. Generates `dist/index.html` and `dist/404.html` (landing page, built inline — not from template)
 
 **Key files to edit:**
-- `src/template.html` — single HTML template for all guest pages. Uses `{{DISPLAY_NAME}}`, `{{LANG}}`, `{{TOKEN}}`, `{{GOOGLE_FORM_URL}}`, and `{{i18n.*}}` placeholders
+- `src/template.html` — single HTML template for all guest pages. Uses `{{DISPLAY_NAME}}`, `{{GUEST_NAMES}}`, `{{LANG}}`, `{{TOKEN}}`, `{{GOOGLE_FORM_URL}}`, and `{{i18n.*}}` placeholders
 - `src/css/styles.css` — all styles. CSS custom properties for colors in `:root`. Uses `@font-face` for Abigail font (heading) + Google Fonts Lora (body)
 - `src/js/main.js` — countdown timer targeting `2026-12-19T17:00:00-05:00`, IntersectionObserver scroll animations
 - `build.js` — i18n dictionaries (ES/EN, ~35 strings each), Google Form config, landing page HTML template (inline), build logic
-- `guests.json` — guest list array with `token`, `names[]`, `displayName`, `lang`, `plusOne`
+- `guests.json` — guest list array with `token`, `names[]`, `displayName`, `lang`, `plusOne`. Note: `plusOne` is defined but not yet used in the build pipeline
+
 
 **i18n** is handled entirely in `build.js` as two dictionaries (`i18n.es`, `i18n.en`). To add a new translatable string: add it to both dictionaries, then use `{{i18n.NEW_KEY}}` in template.html.
 
-**Google Form** is embedded via iframe with pre-filled guest name. Config constants at top of `build.js`: `GOOGLE_FORM_BASE`, `FORM_FIELD_NAME`.
+**Google Form** is embedded via iframe with pre-filled guest name (using `names.join(', ')`). Config constants at top of `build.js`: `GOOGLE_FORM_BASE`, `FORM_FIELD_NAME`.
+
+**Landing page** (`dist/index.html` and `dist/404.html`) is hardcoded to Spanish and generated inline in `build.js` — it does not use `template.html`.
 
 **SVG doodle system**: Background illustrations use an SVG sprite sheet (`<symbol>` definitions) at the top of template.html, referenced via `<use href="#ico-*">` in `.doodles` containers per section. Positioned via numbered CSS classes (`.d1` through `.d82`).
 
