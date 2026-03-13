@@ -81,6 +81,36 @@
     animatedEls.forEach((el) => el.classList.add('is-visible'));
   }
 
+  // --- Add to Calendar (.ics download) ---
+  var calBtn = document.getElementById('add-to-calendar');
+  if (calBtn) {
+    calBtn.addEventListener('click', function () {
+      var ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Katia & Sebastian Wedding//EN',
+        'BEGIN:VEVENT',
+        'DTSTART:20261219T220000Z',
+        'DTEND:20261220T060000Z',
+        'SUMMARY:Boda Katia & Sebastián',
+        'LOCATION:Hacienda Villa Mariana\\, KM 4 vía Cristo Rey\\, Cali\\, Colombia',
+        'DESCRIPTION:Wedding celebration of Katia & Sebastián',
+        'END:VEVENT',
+        'END:VCALENDAR',
+      ].join('\r\n');
+
+      var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'boda-katia-sebastian.ics';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+
   // --- Smooth Scroll for anchor links ---
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function (e) {

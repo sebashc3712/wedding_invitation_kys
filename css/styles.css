@@ -158,6 +158,39 @@ h3 {
   to { transform: scale(1.1) rotate(3deg); }
 }
 
+/* --- Hero two-column layout --- */
+.hero__layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.hero__text {
+  flex: 1;
+  text-align: center;
+}
+
+.hero__invitation {
+  flex: 0 0 clamp(220px, 28vw, 340px);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 20px rgba(107, 112, 92, 0.12),
+    0 8px 40px rgba(203, 153, 126, 0.08);
+}
+
+.hero__invitation img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .hero__pretext {
   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   color: var(--sage-fern);
@@ -214,29 +247,35 @@ h3 {
 }
 
 /* ============================================
-   INVITATION IMAGE SECTION
+   ADD TO CALENDAR BUTTON
    ============================================ */
-.invitation-card {
-  max-width: 600px;
-  margin: 0 auto;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow:
-    0 4px 20px rgba(107, 112, 92, 0.12),
-    0 8px 40px rgba(203, 153, 126, 0.08);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+.details-calendar {
+  margin-top: 2.5rem;
+  text-align: center;
 }
 
-.invitation-card:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 8px 30px rgba(107, 112, 92, 0.18),
-    0 16px 60px rgba(203, 153, 126, 0.12);
+.btn--calendar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: var(--coral);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.invitation-card img {
-  width: 100%;
-  height: auto;
+.btn--calendar:hover {
+  background: var(--terracotta);
+  transform: scale(1.05);
+}
+
+.btn--calendar svg {
+  flex-shrink: 0;
 }
 
 /* ============================================
@@ -248,65 +287,22 @@ h3 {
   margin-top: 2rem;
 }
 
-/* --- Card wrapper (frame image + content) --- */
+/* --- Detail card — clean, sober style --- */
 .detail-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Frame wrapper — positions the frame image behind the content */
-.detail-card__frame {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Frame image — stretched to fill content box exactly */
-.detail-card__frame-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.6;
-  filter: sepia(0.3) saturate(0.6) hue-rotate(-10deg);
-}
-
-/*
- * Padding logic: the frame's decorative lines sit ~12-18% inward from the
- * image edges, so content padding must exceed that to stay inside.
- *
- * Arch (date):   arch cap ≈ top 18%, bottom ellipse ≈ bottom 20%, sides ≈ 10%
- * Oval (venue):  oval curves ≈ sides 18%, top/bottom 12%
- * Wavy (dresscode): scallop peaks ≈ sides 15%, top/bottom 10%
- */
-
-.detail-card__content {
-  position: relative;
-  z-index: 1;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--dusty-rose);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  /* Arch frame (default): clear arch top + bottom ornament */
-  padding: 4.5rem 2rem 4rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Oval frame (venue) */
-.detail-card__frame--oval .detail-card__content {
-  padding: 2.5rem 3rem 2.5rem;
-}
-
-/* Wavy frame (dress code) */
-.detail-card__frame--wavy .detail-card__content {
-  padding: 2.5rem 3rem 2.5rem;
+.detail-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(203, 153, 126, 0.15);
 }
 
 /* Icon area — PNG icons, tinted to match olive-green / terracotta palette */
@@ -722,77 +718,86 @@ h3 {
   .doodle { opacity: 0.45; }
 }
 
+/* --- Mobile: hero stacks vertically --- */
+@media (max-width: 768px) {
+  .hero__layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .hero__invitation {
+    flex: none;
+    max-width: 260px;
+  }
+}
+
 /* --- Mobile: prevent doodle overlap & horizontal scroll --- */
 @media (max-width: 480px) {
   .doodle {
-    opacity: 0.35;
+    opacity: 0.3;
   }
 
-  /* Scale down the largest doodles (>60px) in every section */
+  /* Scale down the largest doodles in every section */
   /* HERO */
-  .d1  { width: 55px; left: 2%; }
-  .d3  { width: 40px; }
-  .d5  { width: 45px; }
-  .d6  { width: 35px; }
-  .d7  { width: 32px; }
-  .d8  { width: 40px; }
-  .d13 { width: 35px; }
-  .d14 { width: 32px; }
-  .d16 { width: 38px; }
-
-  /* INVITATION */
-  .d21 { width: 48px; }
-  .d22 { width: 40px; }
-  .d27 { width: 38px; }
-  .d29 { width: 35px; }
-  .d30 { width: 42px; right: 2%; }
+  .d1  { width: 45px; left: 2%; }
+  .d3  { width: 35px; }
+  .d5  { width: 38px; }
+  .d6  { width: 30px; }
+  .d7  { width: 28px; }
+  .d8  { width: 35px; }
+  .d13 { width: 30px; }
+  .d14 { width: 28px; }
+  .d16 { width: 32px; }
 
   /* EVENT DETAILS */
-  .d41 { width: 45px; }
-  .d42 { width: 42px; }
-  .d43 { width: 38px; }
-  .d48 { width: 40px; right: 2%; }
-  .d49 { width: 35px; }
-  .d50 { width: 32px; }
+  .d41 { width: 38px; }
+  .d42 { width: 35px; }
+  .d43 { width: 32px; }
+  .d48 { width: 35px; right: 2%; }
+  .d49 { width: 30px; }
+  .d50 { width: 28px; }
 
   /* COUNTDOWN */
-  .d61 { width: 45px; }
-  .d62 { width: 32px; }
-  .d65 { width: 35px; }
-  .d67 { width: 38px; }
-  .d72 { width: 35px; }
+  .d61 { width: 38px; }
+  .d62 { width: 28px; }
+  .d65 { width: 30px; }
+  .d67 { width: 32px; }
+  .d72 { width: 30px; }
 
-  /* RSVP */
-  .d81 { width: 40px; }
-  .d82 { width: 35px; }
-  .d83 { width: 42px; }
-  .d86 { width: 32px; }
-  .d89 { width: 32px; }
-  .d90 { width: 35px; }
-  .d91 { width: 35px; }
-  .d92 { width: 32px; }
-  .d97 { width: 35px; }
+  /* RSVP — fewer doodles, scale down */
+  .d81 { width: 35px; }
+  .d82 { width: 30px; }
+  .d86 { width: 28px; }
+  .d89 { width: 28px; }
+  .d90 { width: 30px; }
+  .d92 { width: 28px; }
+  .d97 { width: 30px; }
 
-  /* FOOTER */
-  .d101 { width: 42px; }
-  .d102 { width: 35px; }
-  .d107 { width: 30px; }
-  .d110 { width: 35px; right: 2%; }
-  .d112 { width: 32px; }
+  /* FOOTER — fewer doodles, well spaced */
+  .d101 { width: 35px; }
+  .d103 { width: 25px; top: 8%; }
+  .d106 { width: 28px; }
+  .d110 { width: 30px; right: 2%; }
+  .d112 { width: 28px; }
+  .d113 { width: 28px; }
+  .d116 { width: 30px; }
+  .d118 { width: 28px; }
 
-  /* Stagger overlapping vertical pairs — push one down */
-  .d2  { top: 10%; }   /* was 6%, too close to d1 */
-  .d4  { top: 14%; }   /* was 10%, too close to d3 */
-  .d23 { top: 12%; }   /* was 8%, too close to d21 */
-  .d24 { top: 14%; }   /* was 10%, too close to d22 */
-  .d43 { top: 12%; }   /* was 8%, too close to d41 */
-  .d44 { top: 14%; }   /* was 10%, too close to d42 */
-  .d63 { top: 12%; }   /* was 8%, too close to d61 */
-  .d64 { top: 10%; }   /* was 6%, too close to d62 */
-  .d83 { top: 10%; }   /* was 6%, too close to d81 */
-  .d84 { top: 9%; }    /* was 5%, too close to d82 */
-  .d103 { top: 8%; }   /* was 2%, too close to d101 */
-  .d104 { top: 12%; }  /* was 8%, too close to d102 */
+  /* Stagger overlapping vertical pairs */
+  .d2  { top: 10%; }
+  .d4  { top: 14%; }
+  .d43 { top: 12%; }
+  .d44 { top: 14%; }
+  .d63 { top: 12%; }
+  .d64 { top: 10%; }
+  .d84 { top: 9%; }
+}
+
+/* --- Very small screens: hide doodles entirely --- */
+@media (max-width: 360px) {
+  .doodles {
+    display: none;
+  }
 }
 
 /* ============================================
